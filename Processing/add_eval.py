@@ -58,7 +58,7 @@ def add_eval_to_series(unique_fen_series: pd.Series, depth: int = 15) -> pd.Seri
     """
     # Initialize Stockfish and accept Chess960 positions
     stockfish = Stockfish(path=STOCK_PATH, depth=depth)
-    stockfish.set_uci_option("UCI_Chess960", True)
+    stockfish.update_engine_parameters({"UCI_Chess960": True})
     
     total = len(unique_fen_series)
     invalid_count = 0
