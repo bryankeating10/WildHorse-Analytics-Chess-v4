@@ -1,10 +1,3 @@
-"""
-Docstring for Processing.unique_fen
-
-This module provides functions for evaluating unique FENs so 
-Stockfish is not run on duplicate positions.
-"""
-
 import pandas as pd
 import numpy as np
 
@@ -28,11 +21,17 @@ def unique_fens(moves_df):
     unique_fen_values = moves_df['fen'].unique()
     
     # Create Series indexed by FEN, initialized with NaN
+    # Use dtype=object to accommodate both numeric and string values (mate scores)
     unique_fen_series = pd.Series(
         data=np.nan,
         index=unique_fen_values,
-        name='evaluation'
+        name='evaluation',
+        dtype=object
     )
+    
+    # Reveal number of unique FENs found
+    print(f"Found {len(unique_fen_series)} unique FEN positions from {len(moves_df)} total.")
+    print(f"Computational reduction: {100 * (1 - len(unique_fen_series) / len(moves_df)):.2f}%")
     
     return unique_fen_series
 
