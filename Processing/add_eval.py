@@ -6,7 +6,6 @@ Usage:
     
     # For unique FEN series (recommended for large datasets):
     unique_fen_series = add_eval_to_series(unique_fen_series, depth=15)
-    df_with_evals = repopulate_unique_evals(move_df, unique_fen_series)
     
     # For direct dataframe evaluation (original behavior):
     df_with_evals = add_eval(move_df, depth=15)
@@ -21,10 +20,19 @@ STOCK_PATH = r"C:\Tools\stockfish\stockfish-windows-x86-64-avx2.exe"
 
 
 def is_valid_fen(fen: str) -> bool:
-    """Check if FEN is valid and represents a legal position."""
+    """Check if FEN is valid and represents a legal position (including Chess960)."""
     try:
+        # Try standard chess first
         board = chess.Board(fen)
-        return board.is_valid()  # Check if position is actually legal
+        if board.is_valid():
+            return True
+    except:
+        pass
+    
+    try:
+        # If standard fails, try Chess960
+        board = chess.Board(fen, chess960=True)
+        return board.is_valid()
     except:
         return False
 
@@ -48,8 +56,9 @@ def add_eval_to_series(unique_fen_series: pd.Series, depth: int = 15) -> pd.Seri
     pd.Series
         Series with FEN index and evaluation values
     """
-    # Initialize Stockfish
+    # Initialize Stockfish and accept Chess960 positions
     stockfish = Stockfish(path=STOCK_PATH, depth=depth)
+    stockfish.set_uci_option("UCI_Chess960", True)
     
     total = len(unique_fen_series)
     invalid_count = 0
@@ -117,9 +126,8 @@ def add_eval(move_df: pd.DataFrame, depth: int = 15) -> pd.DataFrame:
     """
     df = move_df.copy()
     
-    # Initialize Stockfish and accept Chess960 positions
+    # Initialize Stockfish
     stockfish = Stockfish(path=STOCK_PATH, depth=depth)
-    stockfish.set_uci_option("UCI_Chess960", True)
     
     evals = []
     total = len(df)
