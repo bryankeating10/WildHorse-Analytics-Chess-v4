@@ -1,4 +1,4 @@
-# WildHorse Analytics: Chess Performance - Version 2
+# WildHorse Analytics: Chess Performance - Version 4
 ## Project Overview
 Our mission is to transfrom chess improvement from intuition-based experimentation to data-driven, purposeful training by systematically analyzing player game data from chess.com. By uncovvering patterns in opening choices, time management, and tactical errors, we provide actionable insights that help players allocate their training effectively to address areas with the highest potential for rating improvement.
 
