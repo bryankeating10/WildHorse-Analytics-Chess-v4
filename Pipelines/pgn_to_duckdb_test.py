@@ -21,6 +21,7 @@ from Processing.cleanmeta import remove_unnec, convert_datetime, map_results, ma
 from Processing.cleanmove import convert_color
 from Processing.unique_fen import unique_fens, repopulate_unique_evals
 from Processing.add_eval import add_eval, add_eval_to_series
+from Processing.merge_data import merge_data
 
 # Username
 username = "bkgr03"
@@ -88,28 +89,29 @@ print(move_df.head())
 move_df = repopulate_unique_evals(move_df, unique_series)
 print(move_df.head())
 
+# Save processed move data
 move_df.to_csv(f'{project_root}/Data/Gold/{username}_moves_gold.csv', index=False)
 print("="*50)
 print("Move Data Processing Complete")
 print("="*50)
 print()
 
-# # Create DuckDB database and load processed data
-# con = duckdb.connect(f'{project_root}/Data/Gold/{username}.duckdb')
-# con.execute(f"""
-#     CREATE TABLE IF NOT EXISTS meta AS 
-#     SELECT * FROM read_csv_auto('{project_root}/Data/Gold/{username}_meta_gold.csv');
-# """)
-# print("="*50)
-# print("DuckDB Database Metadata Table Complete")
-# print("="*50)
-# print()
-# con.execute(f"""
-#     CREATE TABLE IF NOT EXISTS moves AS
-#     SELECT * FROM read_csv_auto('{project_root}/Data/Gold/{username}_moves_gold.csv');
-# """)
-# print("="*50)
-# print("DuckDB Database Moves Table Complete")
-# print("="*50)
-# print()
-# con.close()
+# Merge metadata and move data for analysis
+merged_data = merge_data(meta_df, move_df)
+merged_data.to_csv(f'{project_root}/Data/Gold/{username}_merged_gold.csv', index=False)
+print("="*50)
+print("Merged User Data")
+print("="*50)
+print()
+
+# Create DuckDB database and load processed data
+con = duckdb.connect(f'{project_root}/Data/Gold/{username}.duckdb')
+con.execute(f"""
+    CREATE TABLE IF NOT EXISTS game_data AS 
+    SELECT * FROM read_csv_auto('{project_root}/Data/Gold/{username}_merged_gold.csv');
+""")
+print("="*50)
+print("DuckDB Database Population Complete")
+print("="*50)
+
+con.close()
