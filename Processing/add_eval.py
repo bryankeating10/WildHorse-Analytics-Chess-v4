@@ -117,8 +117,9 @@ def add_eval(move_df: pd.DataFrame, depth: int = 15) -> pd.DataFrame:
     """
     df = move_df.copy()
     
-    # Initialize Stockfish
+    # Initialize Stockfish and accept Chess960 positions
     stockfish = Stockfish(path=STOCK_PATH, depth=depth)
+    stockfish.set_uci_option("UCI_Chess960", True)
     
     evals = []
     total = len(df)

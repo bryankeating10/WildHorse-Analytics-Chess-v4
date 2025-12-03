@@ -73,16 +73,20 @@ move_df = convert_color(move_df)
 print("="*50)
 print("Adding Stockfish Evaluations...")
 print("="*50)
-print()
 
 # Extract unique FENs and to avoid redundant evaluations
 unique_series = unique_fens(move_df)
+print()
 
 # Add evaluations to unique FENs
-unique_series = add_eval_to_series(unique_series, depth=25)
+unique_series = add_eval_to_series(unique_series, depth=5)
+print(unique_series.head())
+
 
 # Repopulate evaluations back to move dataframe
+print(move_df.head())
 move_df = repopulate_unique_evals(move_df, unique_series)
+print(move_df.head())
 
 move_df.to_csv(f'{project_root}/Data/Gold/{username}_moves_gold.csv', index=False)
 print("="*50)

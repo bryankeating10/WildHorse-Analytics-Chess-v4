@@ -1,7 +1,6 @@
 import pandas as pd
 import numpy as np
 
-
 def unique_fens(moves_df):
     """
     Extract unique FEN strings from a moves dataframe.
@@ -54,6 +53,6 @@ def repopulate_unique_evals(moves_df, unique_fen_series):
     """
     # Map evaluations from the unique_fen_series to the moves_df
     # This preserves the original row order
-    moves_df['evaluation'] = moves_df['fen'].map(unique_fen_series)
+    moves_df['eval'] = moves_df['fen'].map(unique_fen_series)
     
     return moves_df
