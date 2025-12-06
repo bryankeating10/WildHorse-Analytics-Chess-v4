@@ -14,3 +14,8 @@ FROM (
     FROM game_data
     GROUP BY game_id
 );
+
+-- First 30 evaluations
+SELECT game_id, eval
+FROM game_data
+LIMIT 20;
