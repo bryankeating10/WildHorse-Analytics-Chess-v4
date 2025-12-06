@@ -16,7 +16,7 @@ from stockfish import Stockfish
 import chess
 
 # Stockfish path
-STOCK_PATH = r"C:\Tools\stockfish\stockfish-windows-x86-64-avx2.exe"
+STOCK_PATH = r"/home/bryan-linux/Tools/stockfish-ubuntu-x86-64-avx2/stockfish/stockfish-ubuntu-x86-64-avx2"
 
 
 def is_valid_fen(fen: str) -> bool:
