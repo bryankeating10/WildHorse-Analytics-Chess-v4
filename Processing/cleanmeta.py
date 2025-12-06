@@ -16,7 +16,7 @@ def remove_unnec(df: pd.DataFrame) -> pd.DataFrame:
         DataFrame with specified columns removed
     """
     df = df.copy()
-    cols_to_remove = ['Event','Site','Round','CurrentPosition','Timezone','ECOUrl','UTCTime','Link']
+    cols_to_remove = ['Event','Site','Round','CurrentPosition','Timezone','ECOUrl','Date','UTCTime','Link']
     df.drop(columns=cols_to_remove, inplace=True, errors='ignore')
     return df
 
