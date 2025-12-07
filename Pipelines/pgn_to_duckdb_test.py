@@ -17,7 +17,7 @@ import duckdb
 from Ingestion.download_pgn import download_pgn
 from Ingestion.movedata import MoveData
 from Ingestion.metadata import MetaData
-from Processing.cleanmeta import remove_unnec, convert_datetime, map_results, map_termination
+from Processing.cleanmeta import remove_unnec, convert_datetime #, map_results, map_termination
 from Processing.cleanmove import convert_color
 from Processing.unique_fen import unique_fens, repopulate_unique_evals
 from Processing.add_eval import add_eval, add_eval_to_series
@@ -60,8 +60,8 @@ print()
 meta_df = meta_parser.df
 meta_df = remove_unnec(meta_df)
 meta_df = convert_datetime(meta_df)
-meta_df = map_results(meta_df)
-meta_df = map_termination(meta_df)
+# meta_df = map_results(meta_df)
+# meta_df = map_termination(meta_df)
 meta_df.to_csv(f'{project_root}/Data/Gold/{username}_meta_gold.csv', index=False)
 print("="*50)
 print("Metadata Processing Complete")
