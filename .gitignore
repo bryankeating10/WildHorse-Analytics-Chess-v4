@@ -10,3 +10,6 @@ Data/
 
 # Any CSV stragglers
 *.csv
+
+# Virtual environments
+venv

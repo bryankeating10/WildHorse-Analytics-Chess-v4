@@ -24,10 +24,10 @@ from Processing.add_eval import add_eval, add_eval_to_series
 from Processing.merge_data import merge_data
 
 # Username
-username = "bkgr03"
+username = "stak1"
 
-# Download PGN files from user archives from December 2025 onwards
-download_pgn(username, start_date='2025-12')
+# Download PGN files from user archives from 2025
+download_pgn(username, start_date='2025-01')
 username = username.lower()
 if len(username) > 8:
     username = username[:8]
@@ -80,7 +80,7 @@ unique_series = unique_fens(move_df)
 print()
 
 # Add evaluations to unique FENs
-unique_series = add_eval_to_series(unique_series, depth=5)
+unique_series = add_eval_to_series(unique_series, depth=20)
 print(unique_series.head())
 
 
