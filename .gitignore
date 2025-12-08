@@ -13,3 +13,6 @@ Data/
 
 # Virtual environments
 venv
+
+# Stockfish engine
+Processing/stockfish-windows-x86-64-avx2.exe
